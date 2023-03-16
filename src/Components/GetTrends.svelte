@@ -24,6 +24,19 @@
     }
 
   }
+  let summary
+  let loading = false
+  const summarize = async ()=>{
+    loading = true
+    await axios.post(`${$api}/summarizeArticles`, {
+      kw: kw,
+      geo: lang,
+    }).then((data) => {
+      console.log(data.data)
+      summary =data.data
+      loading=false
+    });
+  }
 
   async function explore(term) {
     window.location.href = window.origin + "/links/" + term.query + "-" +lang
@@ -38,6 +51,7 @@
   };
 </script>
 
+{#if !summary && !loading}
 <Box sx={{flex:"col", alignItems:"center"}}>
   <Typography variant={1} align="center" sx={{width:"100%"}}>
     ai trending tool
@@ -55,8 +69,14 @@
 
 
   <Button sx={{rounding:2, p:2,m:"2% 0%", width:"25%"}} hover={{backgroundColor:"#752f2f", color:"white"}}
-          click={()=>{getTrends()}}>get summary
+          click={()=>{getTrends()}}>
+    get trends
   </Button>
+  <Button sx={{rounding:2, p:2,m:"2% 0%", width:"25%"}} hover={{backgroundColor:"#752f2f", color:"white"}}
+          click={()=>{summarize()}}>
+    get the news
+  </Button>
+
 </Box>
 
 {#if res}
@@ -73,8 +93,27 @@
         </CardContent>
         <CardActions>
           <Button click={()=>explore(search)}>explore</Button>
+          <Button click={()=>summarize(search)}>summarize</Button>
+
         </CardActions>
       </Card>
     {/each}
   </Box>
 {/if}
+  {:else if !loading}
+  <Box sx={{fontSize:3, m:"20 auto 0 auto", width:"60%", m:"0 auto", color:"white"}}>
+    <P >
+      {summary.ai}
+
+    </P>
+    <Box sx={{flex:"col", fontSize:3}}>
+      {#each summary.urls as url}
+        <Link to={url}>{url}</Link>
+      {/each}
+    </Box>
+  </Box>
+  {:else}
+  <P>loading..</P>
+
+
+  {/if}
