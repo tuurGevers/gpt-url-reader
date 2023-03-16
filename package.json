@@ -23,6 +23,7 @@
 	"type": "module",
 	"dependencies": {
 		"axios": "^1.3.4",
-		"sx-utils-dnit": "^0.3.3"
+		"sx-utils-dnit": "^0.3.4",
+		"date-picker-svelte": "^2.3.0"
 	}
 }

@@ -1,5 +1,5 @@
 <script>
-    import {TextField, Button, P, Fly, Box, Typography} from "sx-utils-dnit"
+    import {TextField, Button, P, Fly, Box, Typography, Link} from "sx-utils-dnit"
     import axios from "axios"
     import {api, threads} from "../stores";
 
@@ -51,6 +51,7 @@
         </Box>
     {/each}
     <Button sx={{rounding:2, p:2,m:"0 0 0 5%", width:"24%"}} hover={{backgroundColor:"#752f2f", color:"white"}} click={()=>{getSummary()}}>get summary</Button>
+    <Link to="trends">Trends</Link>
 </Box>
 {#if waiting && !$threads}
     <Fly dir="y" amount={200} duration={2000}>
@@ -69,3 +70,4 @@
         {/each}
 
 {/if}
+
